@@ -1,1 +1,13 @@
-文化的解放军空军看风景手机开发技术等级开始讲课进口附加税打开链接看
+server:
+  port: 3344
+
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://gitee.com/jianganming/config-server-test.git
+          username: jianganming
+          password: 198706ming
