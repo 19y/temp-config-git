@@ -1,0 +1,130 @@
+server:
+  port: 10010
+spring:
+  profiles: dev
+  servlet:
+    multipart:
+      max-file-size: 2000MB
+      max-request-size: 2500MB
+      enabled: true
+  #  cloud:
+  #    consul:
+  #      host: 127.0.0.1
+  #      port: 8500
+  #      discovery:
+  #        # 通过名称来访问consul中多个相同应用名称的provider
+  #        service-name: generate
+  #        # 这里要设置false，否则会把自己注册到consul中，并提供服务，轮询时会找自己
+  #        register: true
+  application:
+    name: generate2 # 应用名称
+logging:
+  level:
+    com.atbw.exam.mapper: debug  #sql日志打印
+
+info:
+  app.name: generate2
+  app.desc: hehehe
+eureka:
+  client:
+    #    registry-fetch-interval-seconds: 5 # 获取服务列表的周期：5s
+    register-with-eureka: false # 是否注册自己的信息到EurekaServer，默认是true
+    fetch-registry: false # 是否拉取其它服务的信息，默认是true
+    service-url: # EurekaServer地址
+      defaultZone: http://rep1:10010/eureka/
+  instance:
+    #    hostname: rep2
+    prefer-ip-address: true # 当调用getHostname获取实例的hostname时，返回ip而不是host名称
+    ip-address: 127.0.0.1 # 指定自己的ip信息，不指定的话会自己寻找
+
+zuul:
+  prefix: /api # 添加路由前缀
+  routes:
+    user-consumer: # 这里是路由id，不能随意写
+      path: /consumer/** # 这里是映射路径
+      url: http://127.0.0.1:8085 # 映射路径对应的实际url地址
+    #      serviceId: serviceid
+    generate: # 这里是路由id，不能随意写
+      path: /generate/** # 这里是映射路径
+      url: http://127.0.0.1:8081 # 映射路径对应的实际url地址
+  ratelimit:
+    key-prefix: user-consumer #请求的key的前缀
+    enabled: true
+    behind-proxy: true #代理之后
+    default-policy: #针对所有的路由配置的策略
+      limit: 10 #请求数量限制
+      quota: 1000 #请求时间限制
+      refresh-interval: 60 # 刷新时间窗口的时间
+      type:  #可选 限流方式
+        - user
+        - origin
+        - url
+
+
+---
+
+
+
+server:
+  port: 10011
+spring:
+  profiles: test
+  servlet:
+    multipart:
+      max-file-size: 2000MB
+      max-request-size: 2500MB
+      enabled: true
+  #  cloud:
+  #    consul:
+  #      host: 127.0.0.1
+  #      port: 8500
+  #      discovery:
+  #        # 通过名称来访问consul中多个相同应用名称的provider
+  #        service-name: generate
+  #        # 这里要设置false，否则会把自己注册到consul中，并提供服务，轮询时会找自己
+  #        register: true
+  application:
+    name: generate2 # 应用名称
+logging:
+  level:
+    com.atbw.exam.mapper: debug  #sql日志打印
+
+info:
+  app.name: generate2
+  app.desc: hehehe
+eureka:
+  client:
+    #    registry-fetch-interval-seconds: 5 # 获取服务列表的周期：5s
+    register-with-eureka: false # 是否注册自己的信息到EurekaServer，默认是true
+    fetch-registry: false # 是否拉取其它服务的信息，默认是true
+    service-url: # EurekaServer地址
+      defaultZone: http://rep1:10011/eureka/
+  instance:
+    #    hostname: rep2
+    prefer-ip-address: true # 当调用getHostname获取实例的hostname时，返回ip而不是host名称
+    ip-address: 127.0.0.1 # 指定自己的ip信息，不指定的话会自己寻找
+
+zuul:
+  prefix: /api # 添加路由前缀
+  routes:
+    user-consumer: # 这里是路由id，不能随意写
+      path: /consumer/** # 这里是映射路径
+      url: http://127.0.0.1:8086 # 映射路径对应的实际url地址
+    #      serviceId: serviceid
+    generate: # 这里是路由id，不能随意写
+      path: /generate/** # 这里是映射路径
+      url: http://127.0.0.1:8082 # 映射路径对应的实际url地址
+  ratelimit:
+    key-prefix: user-consumer #请求的key的前缀
+    enabled: true
+    behind-proxy: true #代理之后
+    default-policy: #针对所有的路由配置的策略
+      limit: 10 #请求数量限制
+      quota: 1000 #请求时间限制
+      refresh-interval: 60 # 刷新时间窗口的时间
+      type:  #可选 限流方式
+        - user
+        - origin
+        - url
+
+

@@ -1,0 +1,96 @@
+server:
+  port: 8081
+spring:
+  profiles: dev
+  servlet:
+    multipart:
+      max-file-size: 2000MB
+      max-request-size: 2500MB
+      enabled: true
+  #  cloud:
+  #    consul:
+  #      host: 127.0.0.1
+  #      port: 8500
+  #      discovery:
+  #        # 通过名称来访问consul中多个相同应用名称的provider
+  #        service-name: generate
+  #        # 这里要设置false，否则会把自己注册到consul中，并提供服务，轮询时会找自己
+  #        register: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/test?characterEncoding=UTF-8
+    username: root
+    password:
+  application:
+    name: generate # 应用名称
+mybatis:
+  type-aliases-package: com.atbw.exam.pojo
+  configuration:
+    map-underscore-to-camel-case: true  #字段实体属性映射驼峰转换
+logging:
+  level:
+    com.atbw.exam.mapper: debug  #sql日志打印
+
+info:
+  app.name: generate
+  app.desc: hehehe
+eureka:
+  client:
+    register-with-eureka: true # 是否注册自己的信息到EurekaServer，默认是true
+    fetch-registry: true # 是否拉取其它服务的信息，默认是true
+    service-url: # EurekaServer地址
+      defaultZone: http://rep1:1003/eureka/
+  instance:
+    #    hostname: rep2
+    prefer-ip-address: true # 当调用getHostname获取实例的hostname时，返回ip而不是host名称
+    ip-address: 127.0.0.1 # 指定自己的ip信息，不指定的话会自己寻找
+    
+    
+---
+
+
+
+server:
+  port: 8082
+spring:
+  profiles: test
+  servlet:
+    multipart:
+      max-file-size: 2000MB
+      max-request-size: 2500MB
+      enabled: true
+  #  cloud:
+  #    consul:
+  #      host: 127.0.0.1
+  #      port: 8500
+  #      discovery:
+  #        # 通过名称来访问consul中多个相同应用名称的provider
+  #        service-name: generate
+  #        # 这里要设置false，否则会把自己注册到consul中，并提供服务，轮询时会找自己
+  #        register: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/test?characterEncoding=UTF-8
+    username: root
+    password:
+  application:
+    name: generate # 应用名称
+mybatis:
+  type-aliases-package: com.atbw.exam.pojo
+  configuration:
+    map-underscore-to-camel-case: true  #字段实体属性映射驼峰转换
+logging:
+  level:
+    com.atbw.exam.mapper: debug  #sql日志打印
+
+info:
+  app.name: generate
+  app.desc: hehehe
+eureka:
+  client:
+    register-with-eureka: true # 是否注册自己的信息到EurekaServer，默认是true
+    fetch-registry: true # 是否拉取其它服务的信息，默认是true
+    service-url: # EurekaServer地址
+      defaultZone: http://rep1:1004/eureka/
+  instance:
+    #    hostname: rep2
+    prefer-ip-address: true # 当调用getHostname获取实例的hostname时，返回ip而不是host名称
+    ip-address: 127.0.0.1 # 指定自己的ip信息，不指定的话会自己寻找
