@@ -1,13 +1,1 @@
-server:
-  port: 3344
-
-spring:
-  application:
-    name: config-server
-  cloud:
-    config:
-      server:
-        git:
-          uri: https://gitee.com/jianganming/config-server-test.git
-          username: jianganming
-          password: 198706ming
+i飞机拉萨机达拉斯空间的课件萨克安防监控按时艰苦领导就是快乐就爱看就 
